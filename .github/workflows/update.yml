@@ -36,7 +36,7 @@ jobs:
         run: |
           git config user.name "sector-compass-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add data.json history.csv last_run.txt 2>/dev/null || true
+          for f in data.json history.csv last_run.txt; do [ -f "$f" ] && git add "$f"; done
           git diff --staged --quiet || (git commit -m "Data update $(date -u +%F)" && git push)
 
       - name: Assemble site
