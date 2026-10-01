@@ -126,6 +126,11 @@ def close_on_or_before(series, target):
 
 def returns_from_series(series):
     series = sorted(series)
+    # Drop today's bar if the US market hasn't closed yet (close is 20:00/21:00 UTC),
+    # so a daytime run never mixes an intraday price into end-of-day figures.
+    now = datetime.now(timezone.utc)
+    if series and series[-1][0] == now.date() and now.hour < 21:
+        series = series[:-1]
     last_d, last_c = series[-1]
     _, c1 = close_on_or_before(series, months_back(last_d, 1))
     _, c3 = close_on_or_before(series, months_back(last_d, 3))
