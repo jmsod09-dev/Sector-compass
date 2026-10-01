@@ -45,6 +45,7 @@ jobs:
           cp index.html data.json _site/
           [ -f history.csv ] && cp history.csv _site/ || true
           [ -f CNAME ] && cp CNAME _site/ || true
+          cp robots.txt _site/
 
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
