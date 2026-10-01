@@ -1,1 +1,1 @@
-2026-10-01 15:03 UTC  ok=True  source=Yahoo Finance (dividend-adjusted closes)
+2026-10-01 23:01 UTC  ok=True  source=Yahoo Finance (dividend-adjusted closes)
