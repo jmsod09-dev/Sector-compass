@@ -1,32 +1,33 @@
 {
   "sample": false,
   "as_of": "2026-09-30",
-  "generated_at": "2026-10-01 14:48 UTC",
+  "generated_at": "2026-10-01 14:59 UTC",
   "source": "Yahoo Finance (dividend-adjusted closes)",
   "momentum_weight_1m": 0.7,
+  "market_avg_momentum": -1.99,
   "call": "mid",
   "runner_up": "late",
-  "lead": 3.58,
+  "lead": 2.23,
   "close_call": false,
   "phases": [
     {
       "phase": "early",
-      "score": -1.6,
+      "score": -1.48,
       "signals_used": 10
     },
     {
       "phase": "mid",
-      "score": 3.77,
+      "score": 2.91,
       "signals_used": 6
     },
     {
       "phase": "late",
-      "score": 0.19,
+      "score": 0.68,
       "signals_used": 6
     },
     {
       "phase": "recession",
-      "score": -0.23,
+      "score": -0.82,
       "signals_used": 10
     }
   ],
@@ -44,7 +45,8 @@
         "late": -2,
         "recession": 0
       },
-      "rank": 9
+      "rank": 9,
+      "vs_market": -2.88
     },
     {
       "symbol": "XLK",
@@ -59,7 +61,8 @@
         "late": -1,
         "recession": -2
       },
-      "rank": 2
+      "rank": 2,
+      "vs_market": 5.07
     },
     {
       "symbol": "XLE",
@@ -74,7 +77,8 @@
         "late": 2,
         "recession": -2
       },
-      "rank": 1
+      "rank": 1,
+      "vs_market": 6.42
     },
     {
       "symbol": "XLP",
@@ -89,7 +93,8 @@
         "late": 1,
         "recession": 2
       },
-      "rank": 5
+      "rank": 5,
+      "vs_market": -0.73
     },
     {
       "symbol": "XLU",
@@ -104,7 +109,8 @@
         "late": 1,
         "recession": 2
       },
-      "rank": 11
+      "rank": 11,
+      "vs_market": -4.53
     },
     {
       "symbol": "XLF",
@@ -119,7 +125,8 @@
         "late": 0,
         "recession": -1
       },
-      "rank": 6
+      "rank": 6,
+      "vs_market": -1.13
     },
     {
       "symbol": "XLRE",
@@ -134,7 +141,8 @@
         "late": 1,
         "recession": -2
       },
-      "rank": 8
+      "rank": 8,
+      "vs_market": -2.8
     },
     {
       "symbol": "XLI",
@@ -149,7 +157,8 @@
         "late": 0,
         "recession": -2
       },
-      "rank": 10
+      "rank": 10,
+      "vs_market": -3.09
     },
     {
       "symbol": "XLB",
@@ -164,7 +173,8 @@
         "late": 0,
         "recession": -1
       },
-      "rank": 7
+      "rank": 7,
+      "vs_market": -2.34
     },
     {
       "symbol": "XLV",
@@ -179,7 +189,8 @@
         "late": 0,
         "recession": 2
       },
-      "rank": 3
+      "rank": 3,
+      "vs_market": 3.47
     },
     {
       "symbol": "XLC",
@@ -194,7 +205,8 @@
         "late": 0,
         "recession": -1
       },
-      "rank": 4
+      "rank": 4,
+      "vs_market": 2.58
     }
   ],
   "errors": []
