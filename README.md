@@ -9,4 +9,4 @@ using Fidelity's sector-by-phase patterns.
 - `.github/workflows/update.yml` – runs the update at 23:00 UTC on weekdays and publishes the site
 
 Manual update: Actions tab → "Daily update and publish" → Run workflow.
-Data source: Stooq by default. Add a `TIINGO_API_KEY` repository secret to switch to Tiingo.
+Data source: Yahoo Finance (adjusted closes), falling back to Stooq. `last_run.txt` records the last run and any errors. Add a `TIINGO_API_KEY` repository secret to switch to Tiingo.

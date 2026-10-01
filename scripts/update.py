@@ -64,12 +64,37 @@ def fetch_stooq(symbol, start):
     return out
 
 
+def fetch_yahoo(symbol, start):
+    url = (f"https://query1.finance.yahoo.com/v8/finance/chart/{symbol}"
+           f"?range=6mo&interval=1d&events=div")
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+    with urllib.request.urlopen(req, timeout=30) as r:
+        res = json.loads(r.read().decode("utf-8"))["chart"]["result"][0]
+    ts = res["timestamp"]
+    adj = res["indicators"]["adjclose"][0]["adjclose"]
+    return [(datetime.fromtimestamp(t, tz=timezone.utc).date(), float(c))
+            for t, c in zip(ts, adj) if c is not None]
+
+
 def fetch_closes(symbol):
+    """Try sources in order; return (series, source name). Raise with all errors."""
     start = date.today() - timedelta(days=150)
     key = os.environ.get("TIINGO_API_KEY", "").strip()
+    attempts = []
     if key:
-        return fetch_tiingo(symbol, key, start), "Tiingo (dividend-adjusted closes)"
-    return fetch_stooq(symbol, start), "Stooq"
+        attempts.append(("Tiingo (dividend-adjusted closes)", lambda: fetch_tiingo(symbol, key, start)))
+    attempts.append(("Yahoo Finance (dividend-adjusted closes)", lambda: fetch_yahoo(symbol, start)))
+    attempts.append(("Stooq", lambda: fetch_stooq(symbol, start)))
+    errs = []
+    for name, fn in attempts:
+        try:
+            series = fn()
+            if len(series) > 60:
+                return series, name
+            errs.append(f"{name}: only {len(series)} rows")
+        except Exception as ex:
+            errs.append(f"{name}: {ex}")
+    raise RuntimeError(" | ".join(errs))
 
 
 # ------------------------------------------------------------------- maths
@@ -155,6 +180,7 @@ def main():
         except Exception as ex:  # keep going; report on the page
             errors.append(f"{e['symbol']}: {ex}")
 
+    write_status(errors, ok=bool(etfs), source=source)
     if not etfs:
         print("No data fetched:\n" + "\n".join(errors), file=sys.stderr)
         sys.exit(1)
@@ -190,6 +216,14 @@ def main():
           + " ".join(f"{s['phase']}={s['score']}" for s in scores))
     if errors:
         print("Errors:\n" + "\n".join(errors), file=sys.stderr)
+
+
+def write_status(errors, ok, source):
+    """Plain-text record of the last run, committed so problems are visible in the repo."""
+    with open(os.path.join(ROOT, "last_run.txt"), "w") as f:
+        f.write(f"{datetime.now(timezone.utc):%Y-%m-%d %H:%M UTC}  ok={ok}  source={source}\n")
+        for e in errors:
+            f.write(e + "\n")
 
 
 def append_history(data, phases):
