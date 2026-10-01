@@ -9,11 +9,11 @@
     {"symbol": "XLE",  "sector": "Energy",                 "enabled": true,  "weights": {"early": -2, "mid": 0,  "late": 2,  "recession": -2}},
     {"symbol": "XLP",  "sector": "Consumer Staples",       "enabled": true,  "weights": {"early": -2, "mid": -1, "late": 1,  "recession": 2}},
     {"symbol": "XLU",  "sector": "Utilities",              "enabled": true,  "weights": {"early": -2, "mid": -1, "late": 1,  "recession": 2}},
-    {"symbol": "XLF",  "sector": "Financials",             "enabled": false, "weights": {"early": 1,  "mid": 0,  "late": 0,  "recession": -1}},
-    {"symbol": "XLRE", "sector": "Real Estate",            "enabled": false, "weights": {"early": 2,  "mid": -1, "late": 1,  "recession": -2}},
-    {"symbol": "XLI",  "sector": "Industrials",            "enabled": false, "weights": {"early": 2,  "mid": 0,  "late": 0,  "recession": -2}},
-    {"symbol": "XLB",  "sector": "Materials",              "enabled": false, "weights": {"early": 1,  "mid": -2, "late": 0,  "recession": -1}},
-    {"symbol": "XLV",  "sector": "Health Care",            "enabled": false, "weights": {"early": -2, "mid": 0,  "late": 0,  "recession": 2}},
-    {"symbol": "XLC",  "sector": "Communication Services", "enabled": false, "weights": {"early": 0,  "mid": 1,  "late": 0,  "recession": -1}}
+    {"symbol": "XLF",  "sector": "Financials",             "enabled": true, "weights": {"early": 1,  "mid": 0,  "late": 0,  "recession": -1}},
+    {"symbol": "XLRE", "sector": "Real Estate",            "enabled": true, "weights": {"early": 2,  "mid": -1, "late": 1,  "recession": -2}},
+    {"symbol": "XLI",  "sector": "Industrials",            "enabled": true, "weights": {"early": 2,  "mid": 0,  "late": 0,  "recession": -2}},
+    {"symbol": "XLB",  "sector": "Materials",              "enabled": true, "weights": {"early": 1,  "mid": -2, "late": 0,  "recession": -1}},
+    {"symbol": "XLV",  "sector": "Health Care",            "enabled": true, "weights": {"early": -2, "mid": 0,  "late": 0,  "recession": 2}},
+    {"symbol": "XLC",  "sector": "Communication Services", "enabled": true, "weights": {"early": 0,  "mid": 1,  "late": 0,  "recession": -1}}
   ]
 }
