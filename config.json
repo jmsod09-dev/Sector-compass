@@ -1,0 +1,19 @@
+{
+  "_readme": "Edit this file to change the model. 'enabled' switches an ETF on or off. Weights are Fidelity's sector-by-phase signs: ++ = 2, + = 1, - = -1, -- = -2, blank = 0. Source: Fidelity, 'The Business Cycle Approach to Asset Allocation', Exhibit 5 (updated 31 Jan 2025).",
+  "momentum_weight_1m": 0.7,
+  "close_call_margin": 0.5,
+  "phases": ["early", "mid", "late", "recession"],
+  "etfs": [
+    {"symbol": "XLY",  "sector": "Consumer Discretionary", "enabled": true,  "weights": {"early": 2,  "mid": 0,  "late": -2, "recession": 0}},
+    {"symbol": "XLK",  "sector": "Technology",             "enabled": true,  "weights": {"early": 1,  "mid": 1,  "late": -1, "recession": -2}},
+    {"symbol": "XLE",  "sector": "Energy",                 "enabled": true,  "weights": {"early": -2, "mid": 0,  "late": 2,  "recession": -2}},
+    {"symbol": "XLP",  "sector": "Consumer Staples",       "enabled": true,  "weights": {"early": -2, "mid": -1, "late": 1,  "recession": 2}},
+    {"symbol": "XLU",  "sector": "Utilities",              "enabled": true,  "weights": {"early": -2, "mid": -1, "late": 1,  "recession": 2}},
+    {"symbol": "XLF",  "sector": "Financials",             "enabled": false, "weights": {"early": 1,  "mid": 0,  "late": 0,  "recession": -1}},
+    {"symbol": "XLRE", "sector": "Real Estate",            "enabled": false, "weights": {"early": 2,  "mid": -1, "late": 1,  "recession": -2}},
+    {"symbol": "XLI",  "sector": "Industrials",            "enabled": false, "weights": {"early": 2,  "mid": 0,  "late": 0,  "recession": -2}},
+    {"symbol": "XLB",  "sector": "Materials",              "enabled": false, "weights": {"early": 1,  "mid": -2, "late": 0,  "recession": -1}},
+    {"symbol": "XLV",  "sector": "Health Care",            "enabled": false, "weights": {"early": -2, "mid": 0,  "late": 0,  "recession": 2}},
+    {"symbol": "XLC",  "sector": "Communication Services", "enabled": false, "weights": {"early": 0,  "mid": 1,  "late": 0,  "recession": -1}}
+  ]
+}

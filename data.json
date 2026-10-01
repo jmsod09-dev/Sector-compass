@@ -1,0 +1,111 @@
+{
+  "sample": true,
+  "as_of": "2026-10-01",
+  "generated_at": "2026-10-01 14:28 UTC",
+  "source": "Sample numbers (not market data)",
+  "momentum_weight_1m": 0.7,
+  "call": "mid",
+  "runner_up": "early",
+  "lead": 0.33,
+  "close_call": true,
+  "phases": [
+    {
+      "phase": "early",
+      "score": 0.81,
+      "signals_used": 5
+    },
+    {
+      "phase": "mid",
+      "score": 1.14,
+      "signals_used": 3
+    },
+    {
+      "phase": "late",
+      "score": -1.04,
+      "signals_used": 5
+    },
+    {
+      "phase": "recession",
+      "score": -0.9,
+      "signals_used": 4
+    }
+  ],
+  "etfs": [
+    {
+      "symbol": "XLY",
+      "sector": "Consumer Discretionary",
+      "close": null,
+      "r1m": 1.8,
+      "r3m": 4.5,
+      "momentum": 2.07,
+      "weights": {
+        "early": 2,
+        "mid": 0,
+        "late": -2,
+        "recession": 0
+      },
+      "rank": 2
+    },
+    {
+      "symbol": "XLK",
+      "sector": "Technology",
+      "close": null,
+      "r1m": 2.6,
+      "r3m": 7.9,
+      "momentum": 3.41,
+      "weights": {
+        "early": 1,
+        "mid": 1,
+        "late": -1,
+        "recession": -2
+      },
+      "rank": 1
+    },
+    {
+      "symbol": "XLE",
+      "sector": "Energy",
+      "close": null,
+      "r1m": -1.2,
+      "r3m": 2.1,
+      "momentum": 0.15,
+      "weights": {
+        "early": -2,
+        "mid": 0,
+        "late": 2,
+        "recession": -2
+      },
+      "rank": 4
+    },
+    {
+      "symbol": "XLP",
+      "sector": "Consumer Staples",
+      "close": null,
+      "r1m": -0.9,
+      "r3m": -2.4,
+      "momentum": -1.08,
+      "weights": {
+        "early": -2,
+        "mid": -1,
+        "late": 1,
+        "recession": 2
+      },
+      "rank": 5
+    },
+    {
+      "symbol": "XLU",
+      "sector": "Utilities",
+      "close": null,
+      "r1m": 0.4,
+      "r3m": 3.0,
+      "momentum": 1.06,
+      "weights": {
+        "early": -2,
+        "mid": -1,
+        "late": 1,
+        "recession": 2
+      },
+      "rank": 3
+    }
+  ],
+  "errors": []
+}

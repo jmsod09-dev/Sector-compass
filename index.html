@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sector Compass</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,500..800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one instrument-panel column. Verdict first, then the four phases in cycle order, then the sector evidence, then the method. */
+:root {
+  --bg: #f3f6f7;
+  --surface: #ffffff;
+  --fg: #15202a;
+  --muted: #5a6a77;
+  --line: #d9e1e6;
+  --accent: #0d6b72;
+  --early: #2e8a57;
+  --mid: #2c68a8;
+  --late: #b97a14;
+  --rec: #b0443a;
+  --pos: #23784b;
+  --neg: #b0443a;
+  --warn-bg: #fbf1dc;
+  --warn-fg: #6e4a07;
+  --font-display: "Archivo", "Arial Narrow", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e151b; --surface: #16202a; --fg: #e3eaef; --muted: #91a2af; --line: #263440;
+    --accent: #4fb3b9; --early: #5cc28a; --mid: #6ea3e0; --late: #e0a748; --rec: #e57a6e;
+    --pos: #5cc28a; --neg: #e57a6e; --warn-bg: #3a2e14; --warn-fg: #f0d29a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e151b; --surface: #16202a; --fg: #e3eaef; --muted: #91a2af; --line: #263440;
+  --accent: #4fb3b9; --early: #5cc28a; --mid: #6ea3e0; --late: #e0a748; --rec: #e57a6e;
+  --pos: #5cc28a; --neg: #e57a6e; --warn-bg: #3a2e14; --warn-fg: #f0d29a;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font: 400 15px/1.55 var(--font-body);
+  padding-inline: 16px;
+  padding-block: 24px 48px;
+}
+.wrap { max-width: 960px; margin: 0 auto; display: grid; gap: 28px; }
+
+header.top { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 24px; border-bottom: 1px solid var(--line); padding-bottom: 14px; }
+.brand { font: 800 22px/1 var(--font-display); font-stretch: 85%; letter-spacing: 0.01em; margin: 0; }
+.brand span { color: var(--accent); }
+.stamp { font: 400 12.5px/1.4 var(--font-mono); color: var(--muted); }
+
+.banner { background: var(--warn-bg); color: var(--warn-fg); border-radius: 6px; padding: 10px 14px; font-size: 14px; }
+
+.verdict { display: grid; gap: 6px; }
+.eyebrow { font: 600 11.5px/1 var(--font-body); text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); }
+.call { font: 800 clamp(40px, 9vw, 72px)/0.95 var(--font-display); font-stretch: 78%; margin: 0; text-wrap: balance; }
+.callnote { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; color: var(--muted); }
+.chip { font: 600 12px/1 var(--font-body); padding: 5px 9px; border-radius: 999px; border: 1px solid currentColor; letter-spacing: 0.02em; }
+.chip.close { color: var(--late); }
+.chip.clear { color: var(--pos); }
+
+/* Cycle strip */
+.cycle { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.ph { padding: 16px 16px 14px; display: grid; gap: 10px; position: relative; min-width: 0; }
+.ph + .ph { border-left: 1px solid var(--line); }
+.ph .name { display: flex; align-items: center; gap: 8px; font: 700 15px/1.1 var(--font-display); font-stretch: 90%; text-transform: uppercase; letter-spacing: 0.04em; }
+.ph .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--c); flex: none; }
+.ph .seq { font: 400 11px/1 var(--font-mono); color: var(--muted); margin-left: auto; }
+.ph .score { font: 500 26px/1 var(--font-mono); font-variant-numeric: tabular-nums; }
+.ph .bar { height: 8px; position: relative; background: var(--bg); border-radius: 2px; }
+.ph .bar::before { content: ""; position: absolute; left: 50%; top: -3px; bottom: -3px; width: 1px; background: var(--muted); opacity: 0.5; }
+.ph .fill { position: absolute; top: 0; bottom: 0; background: var(--c); border-radius: 2px; }
+.ph .meta { font-size: 12px; color: var(--muted); }
+.ph.win { box-shadow: inset 0 3px 0 var(--c); }
+.ph.win .score { color: var(--c); }
+.ph[data-p="early"] { --c: var(--early); }
+.ph[data-p="mid"] { --c: var(--mid); }
+.ph[data-p="late"] { --c: var(--late); }
+.ph[data-p="recession"] { --c: var(--rec); }
+@media (max-width: 640px) {
+  .cycle { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ph:nth-child(3) { border-left: 0; }
+  .ph:nth-child(n+3) { border-top: 1px solid var(--line); }
+}
+
+h2 { font: 700 18px/1.2 var(--font-display); font-stretch: 90%; margin: 0 0 4px; text-wrap: balance; }
+.sub { color: var(--muted); margin: 0 0 12px; font-size: 14px; max-width: 65ch; }
+
+/* Table */
+.tbl { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; }
+table { border-collapse: collapse; width: 100%; min-width: 640px; font-size: 14px; }
+th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--line); white-space: nowrap; }
+tbody tr:last-child td { border-bottom: 0; }
+th { font: 600 11px/1.2 var(--font-body); text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+td.n, th.n { text-align: right; font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+td.s, th.s { text-align: center; font-family: var(--font-mono); width: 44px; }
+th.s { color: var(--c); }
+th.s[data-p="early"] { --c: var(--early); } th.s[data-p="mid"] { --c: var(--mid); }
+th.s[data-p="late"] { --c: var(--late); } th.s[data-p="recession"] { --c: var(--rec); }
+.tick { font: 600 14px/1 var(--font-mono); }
+.sector { color: var(--muted); }
+.pos { color: var(--pos); } .neg { color: var(--neg); } .zero { color: var(--muted); }
+.rank { font-family: var(--font-mono); color: var(--muted); }
+
+/* Method */
+.method { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px 32px; }
+.method > div { min-width: 0; }
+.method h3 { font: 600 13px/1.3 var(--font-body); text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 0 0 6px; }
+.method p, .method li { margin: 0 0 6px; font-size: 14px; }
+.method ul { margin: 0; padding-left: 18px; }
+.formula { font: 400 13.5px/1.5 var(--font-mono); background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; overflow-x: auto; }
+
+.hist table { min-width: 420px; }
+
+footer { border-top: 1px solid var(--line); padding-top: 14px; font-size: 12.5px; color: var(--muted); display: grid; gap: 4px; }
+footer a { color: var(--accent); }
+.err { color: var(--neg); font-size: 13px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <p class="brand">Sector<span>Compass</span></p>
+    <div class="stamp" id="stamp">Loading data…</div>
+  </header>
+
+  <div class="banner" id="banner" hidden>Sample numbers for testing the logic. These are not market data.</div>
+
+  <section class="verdict" aria-live="polite">
+    <div class="eyebrow">Market-implied cycle phase</div>
+    <h1 class="call" id="call">…</h1>
+    <div class="callnote" id="callnote"></div>
+  </section>
+
+  <section>
+    <div class="cycle" id="cycle"></div>
+  </section>
+
+  <section>
+    <h2>Sector evidence</h2>
+    <p class="sub">US sector ETFs ranked by momentum. The signs on the right show which phases each sector has historically led (+) or lagged (−), per Fidelity.</p>
+    <div class="tbl">
+      <table>
+        <thead>
+          <tr>
+            <th class="n">#</th><th>ETF</th><th>Sector</th>
+            <th class="n">1M %</th><th class="n">3M %</th><th class="n">Momentum</th>
+            <th class="s" data-p="early">E</th><th class="s" data-p="mid">M</th><th class="s" data-p="late">L</th><th class="s" data-p="recession">R</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+    <p class="err" id="errors" hidden></p>
+  </section>
+
+  <section class="hist" id="histwrap" hidden>
+    <h2>Recent calls</h2>
+    <p class="sub">One row per trading day. Watch for the call changing, and for the leading score pulling away from the rest.</p>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>Date</th><th class="n">Early</th><th class="n">Mid</th><th class="n">Late</th><th class="n">Recession</th><th>Call</th></tr></thead>
+        <tbody id="hist"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>How the call is made</h2>
+    <div class="method">
+      <div>
+        <h3>1 · Momentum per ETF</h3>
+        <div class="formula" id="f1">0.7 × 1M + 0.3 × (3M − 1M)</div>
+        <p>The last month carries most of the weight, reflecting current market mood. The two months before it confirm the trend.</p>
+      </div>
+      <div>
+        <h3>2 · Score per phase</h3>
+        <div class="formula">Σ (sign × momentum) ÷ Σ |sign|</div>
+        <p>Signs: ++ = 2, + = 1, − = −1, −− = −2. A phase scores high when its usual leaders are rising and its usual laggards are falling.</p>
+      </div>
+      <div>
+        <h3>Read with care</h3>
+        <ul>
+          <li>This reads the phase from which sectors lead, not from economic data. A one-off shock, such as an oil spike, can move it.</li>
+          <li>It measures price momentum, which shows where money is leaning. It does not measure fund flows.</li>
+          <li>Fidelity's patterns come from US stocks, 1962–2021. Past patterns may not repeat.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div id="source"></div>
+    <div>Phase signs: Fidelity Investments, “The Business Cycle Approach to Asset Allocation”, Exhibit 5 (updated 31 Jan 2025). For information only. Not investment advice.</div>
+  </footer>
+</div>
+
+<script>
+(function () {
+  var PH = { early: "Early", mid: "Mid", late: "Late", recession: "Recession" };
+  var ORDER = ["early", "mid", "late", "recession"];
+  var SIGN = { "2": "++", "1": "+", "0": "", "-1": "−", "-2": "−−" };
+
+  function fmt(v, d) {
+    if (v === null || v === undefined || isNaN(v)) return "–";
+    var s = Math.abs(v).toFixed(d === undefined ? 2 : d);
+    return (v > 0 ? "+" : v < 0 ? "−" : "") + s;
+  }
+  function cls(v) { return v > 0 ? "pos" : v < 0 ? "neg" : "zero"; }
+  function el(tag, attrs, text) {
+    var e = document.createElement(tag);
+    for (var k in attrs || {}) e.setAttribute(k, attrs[k]);
+    if (text !== undefined) e.textContent = text;
+    return e;
+  }
+
+  function render(d) {
+    document.getElementById("banner").hidden = !d.sample;
+    document.getElementById("stamp").textContent = "Data as of " + d.as_of + " · updated " + d.generated_at;
+
+    var name = PH[d.call] + (d.call === "recession" ? "" : " cycle");
+    document.getElementById("call").textContent = name;
+    var note = document.getElementById("callnote");
+    note.innerHTML = "";
+    if (d.runner_up) {
+      note.appendChild(el("span", {}, "Leads " + PH[d.runner_up] + " by " + d.lead.toFixed(2) + " points"));
+      note.appendChild(d.close_call
+        ? el("span", { "class": "chip close" }, "Close call")
+        : el("span", { "class": "chip clear" }, "Clear lead"));
+    }
+
+    var maxAbs = Math.max.apply(null, d.phases.map(function (p) { return Math.abs(p.score || 0); })) || 1;
+    var cyc = document.getElementById("cycle");
+    cyc.innerHTML = "";
+    ORDER.forEach(function (key, i) {
+      var p = d.phases.filter(function (x) { return x.phase === key; })[0];
+      if (!p) return;
+      var box = el("div", { "class": "ph" + (key === d.call ? " win" : ""), "data-p": key });
+      var nm = el("div", { "class": "name" });
+      nm.appendChild(el("span", { "class": "dot" }));
+      nm.appendChild(el("span", {}, PH[key]));
+      nm.appendChild(el("span", { "class": "seq" }, (i + 1) + "/4"));
+      box.appendChild(nm);
+      box.appendChild(el("div", { "class": "score" }, fmt(p.score)));
+      var bar = el("div", { "class": "bar", "role": "img", "aria-label": PH[key] + " score " + fmt(p.score) });
+      var w = Math.min(50, Math.abs(p.score || 0) / maxAbs * 50);
+      var fill = el("div", { "class": "fill" });
+      fill.style.width = w + "%";
+      fill.style.left = (p.score >= 0 ? 50 : 50 - w) + "%";
+      bar.appendChild(fill);
+      box.appendChild(bar);
+      box.appendChild(el("div", { "class": "meta" }, p.signals_used + " sector signal" + (p.signals_used === 1 ? "" : "s")));
+      cyc.appendChild(box);
+    });
+
+    var rows = document.getElementById("rows");
+    rows.innerHTML = "";
+    d.etfs.slice().sort(function (a, b) { return a.rank - b.rank; }).forEach(function (e) {
+      var tr = el("tr");
+      tr.appendChild(el("td", { "class": "n rank" }, String(e.rank)));
+      tr.appendChild(el("td", { "class": "tick" }, e.symbol));
+      tr.appendChild(el("td", { "class": "sector" }, e.sector));
+      tr.appendChild(el("td", { "class": "n " + cls(e.r1m) }, fmt(e.r1m)));
+      tr.appendChild(el("td", { "class": "n " + cls(e.r3m) }, fmt(e.r3m)));
+      tr.appendChild(el("td", { "class": "n " + cls(e.momentum) }, fmt(e.momentum)));
+      ORDER.forEach(function (k) {
+        var wv = e.weights[k];
+        tr.appendChild(el("td", { "class": "s " + cls(wv) }, SIGN[String(wv)]));
+      });
+      rows.appendChild(tr);
+    });
+
+    document.getElementById("f1").textContent =
+      d.momentum_weight_1m + " × 1M + " + (1 - d.momentum_weight_1m).toFixed(1) + " × (3M − 1M)";
+    document.getElementById("source").textContent =
+      "Prices: " + d.source + ". Returns are calculated from daily closes to " + d.as_of + ".";
+
+    var errs = document.getElementById("errors");
+    errs.hidden = !(d.errors && d.errors.length);
+    if (!errs.hidden) errs.textContent = "Missing data: " + d.errors.join("; ");
+  }
+
+  function renderHistory(text) {
+    var lines = text.trim().split(/\r?\n/).slice(1).filter(Boolean);
+    if (!lines.length) return;
+    var tb = document.getElementById("hist");
+    lines.slice(-10).reverse().forEach(function (line) {
+      var c = line.split(",");
+      var tr = el("tr");
+      tr.appendChild(el("td", { "class": "n", "style": "text-align:left" }, c[0]));
+      for (var i = 1; i <= 4; i++) tr.appendChild(el("td", { "class": "n " + cls(parseFloat(c[i])) }, fmt(parseFloat(c[i]))));
+      tr.appendChild(el("td", {}, PH[c[5]] || c[5]));
+      tb.appendChild(tr);
+    });
+    document.getElementById("histwrap").hidden = false;
+  }
+
+  fetch("data.json", { cache: "no-store" })
+    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(render)
+    .catch(function () {
+      document.getElementById("stamp").textContent = "Data could not be loaded. Try refreshing the page.";
+    });
+
+  fetch("history.csv", { cache: "no-store" })
+    .then(function (r) { return r.ok ? r.text() : ""; })
+    .then(function (t) { if (t) renderHistory(t); })
+    .catch(function () {});
+})();
+</script>
+</body>
+</html>
