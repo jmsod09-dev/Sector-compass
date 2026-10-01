@@ -143,9 +143,11 @@ def momentum(r1, r3, w):
 
 
 def phase_scores(etfs, phases):
+    """Scores use momentum relative to the average of all ETFs (vs market),
+    matching Fidelity's grid, which describes performance relative to the market."""
     out = []
     for p in phases:
-        num = sum(e["weights"][p] * e["momentum"] for e in etfs)
+        num = sum(e["weights"][p] * e["vs_market"] for e in etfs)
         den = sum(abs(e["weights"][p]) for e in etfs)
         out.append({
             "phase": p,
@@ -192,6 +194,9 @@ def main():
 
     for i, e in enumerate(sorted(etfs, key=lambda x: -x["momentum"]), 1):
         e["rank"] = i
+    market_avg = sum(e["momentum"] for e in etfs) / len(etfs)
+    for e in etfs:
+        e["vs_market"] = round(e["momentum"] - market_avg, 2)
 
     scores = phase_scores(etfs, phases)
     ranked = sorted([s for s in scores if s["score"] is not None], key=lambda s: -s["score"])
@@ -203,6 +208,7 @@ def main():
         "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
         "source": source,
         "momentum_weight_1m": w,
+        "market_avg_momentum": round(market_avg, 2),
         "call": ranked[0]["phase"],
         "runner_up": ranked[1]["phase"] if len(ranked) > 1 else None,
         "lead": lead,

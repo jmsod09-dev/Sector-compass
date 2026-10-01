@@ -99,7 +99,7 @@ h2 { font: 700 18px/1.2 var(--font-display); font-stretch: 90%; margin: 0 0 4px;
 
 /* Table */
 .tbl { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; }
-table { border-collapse: collapse; width: 100%; min-width: 640px; font-size: 14px; }
+table { border-collapse: collapse; width: 100%; min-width: 700px; font-size: 14px; }
 th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--line); white-space: nowrap; }
 tbody tr:last-child td { border-bottom: 0; }
 th { font: 600 11px/1.2 var(--font-body); text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
@@ -149,13 +149,13 @@ footer a { color: var(--accent); }
 
   <section>
     <h2>Sector evidence</h2>
-    <p class="sub">US sector ETFs ranked by momentum. The signs on the right show which phases each sector has historically led (+) or lagged (−), per Fidelity.</p>
+    <p class="sub">US sector ETFs ranked by momentum. "vs market" is momentum minus the average of all sectors (<span id="mkt">–</span>), which is what the phase scores use. The signs on the right show which phases each sector has historically led (+) or lagged (−), per Fidelity.</p>
     <div class="tbl">
       <table>
         <thead>
           <tr>
             <th class="n">#</th><th>ETF</th><th>Sector</th>
-            <th class="n">1M %</th><th class="n">3M %</th><th class="n">Momentum</th>
+            <th class="n">1M %</th><th class="n">3M %</th><th class="n">Momentum</th><th class="n">vs market</th>
             <th class="s" data-p="early">E</th><th class="s" data-p="mid">M</th><th class="s" data-p="late">L</th><th class="s" data-p="recession">R</th>
           </tr>
         </thead>
@@ -186,8 +186,8 @@ footer a { color: var(--accent); }
       </div>
       <div>
         <h3>2 · Score per phase</h3>
-        <div class="formula">Σ (sign × momentum) ÷ Σ |sign|</div>
-        <p>Signs: ++ = 2, + = 1, − = −1, −− = −2. A phase scores high when its usual leaders are rising and its usual laggards are falling.</p>
+        <div class="formula">Σ (sign × vs market) ÷ Σ |sign|</div>
+        <p>Signs: ++ = 2, + = 1, − = −1, −− = −2. Each sector is measured against the average of all sectors, so a market-wide rise or fall does not tilt the result. A phase scores high when its usual leaders beat the market and its usual laggards trail it.</p>
       </div>
       <div>
         <h3>Read with care</h3>
@@ -274,6 +274,7 @@ footer a { color: var(--accent); }
       tr.appendChild(el("td", { "class": "n " + cls(e.r1m) }, fmt(e.r1m)));
       tr.appendChild(el("td", { "class": "n " + cls(e.r3m) }, fmt(e.r3m)));
       tr.appendChild(el("td", { "class": "n " + cls(e.momentum) }, fmt(e.momentum)));
+      tr.appendChild(el("td", { "class": "n " + cls(e.vs_market) }, fmt(e.vs_market)));
       ORDER.forEach(function (k) {
         var wv = e.weights[k];
         tr.appendChild(el("td", { "class": "s " + cls(wv) }, SIGN[String(wv)]));
@@ -281,6 +282,7 @@ footer a { color: var(--accent); }
       rows.appendChild(tr);
     });
 
+    if (d.market_avg_momentum !== undefined) document.getElementById("mkt").textContent = fmt(d.market_avg_momentum);
     document.getElementById("f1").textContent =
       d.momentum_weight_1m + " × 1M + " + (1 - d.momentum_weight_1m).toFixed(1) + " × (3M − 1M)";
     document.getElementById("source").textContent =
