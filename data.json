@@ -1,32 +1,32 @@
 {
-  "sample": true,
+  "sample": false,
   "as_of": "2026-10-01",
-  "generated_at": "2026-10-01 14:28 UTC",
-  "source": "Sample numbers (not market data)",
+  "generated_at": "2026-10-01 14:39 UTC",
+  "source": "Yahoo Finance (dividend-adjusted closes)",
   "momentum_weight_1m": 0.7,
   "call": "mid",
   "runner_up": "early",
-  "lead": 0.33,
-  "close_call": true,
+  "lead": 3.97,
+  "close_call": false,
   "phases": [
     {
       "phase": "early",
-      "score": 0.81,
+      "score": 0.65,
       "signals_used": 5
     },
     {
       "phase": "mid",
-      "score": 1.14,
+      "score": 4.62,
       "signals_used": 3
     },
     {
       "phase": "late",
-      "score": -1.04,
+      "score": 0.46,
       "signals_used": 5
     },
     {
       "phase": "recession",
-      "score": -0.9,
+      "score": -4.48,
       "signals_used": 4
     }
   ],
@@ -34,25 +34,25 @@
     {
       "symbol": "XLY",
       "sector": "Consumer Discretionary",
-      "close": null,
-      "r1m": 1.8,
-      "r3m": 4.5,
-      "momentum": 2.07,
+      "close": 108.4,
+      "r1m": -5.19,
+      "r3m": -8.0,
+      "momentum": -4.48,
       "weights": {
         "early": 2,
         "mid": 0,
         "late": -2,
         "recession": 0
       },
-      "rank": 2
+      "rank": 4
     },
     {
       "symbol": "XLK",
       "sector": "Technology",
-      "close": null,
-      "r1m": 2.6,
-      "r3m": 7.9,
-      "momentum": 3.41,
+      "close": 196.89,
+      "r1m": 7.34,
+      "r3m": 6.2,
+      "momentum": 4.79,
       "weights": {
         "early": 1,
         "mid": 1,
@@ -64,40 +64,25 @@
     {
       "symbol": "XLE",
       "sector": "Energy",
-      "close": null,
-      "r1m": -1.2,
-      "r3m": 2.1,
-      "momentum": 0.15,
+      "close": 62.1,
+      "r1m": -3.56,
+      "r3m": 18.28,
+      "momentum": 4.06,
       "weights": {
         "early": -2,
         "mid": 0,
         "late": 2,
         "recession": -2
       },
-      "rank": 4
+      "rank": 2
     },
     {
       "symbol": "XLP",
       "sector": "Consumer Staples",
-      "close": null,
-      "r1m": -0.9,
-      "r3m": -2.4,
-      "momentum": -1.08,
-      "weights": {
-        "early": -2,
-        "mid": -1,
-        "late": 1,
-        "recession": 2
-      },
-      "rank": 5
-    },
-    {
-      "symbol": "XLU",
-      "sector": "Utilities",
-      "close": null,
-      "r1m": 0.4,
-      "r3m": 3.0,
-      "momentum": 1.06,
+      "close": 80.33,
+      "r1m": -5.15,
+      "r3m": -2.93,
+      "momentum": -2.94,
       "weights": {
         "early": -2,
         "mid": -1,
@@ -105,6 +90,21 @@
         "recession": 2
       },
       "rank": 3
+    },
+    {
+      "symbol": "XLU",
+      "sector": "Utilities",
+      "close": 39.39,
+      "r1m": -6.77,
+      "r3m": -11.37,
+      "momentum": -6.12,
+      "weights": {
+        "early": -2,
+        "mid": -1,
+        "late": 1,
+        "recession": 2
+      },
+      "rank": 5
     }
   ],
   "errors": []
