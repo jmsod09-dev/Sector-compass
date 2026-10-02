@@ -1,33 +1,33 @@
 {
   "sample": false,
-  "as_of": "2026-10-01",
-  "generated_at": "2026-10-01 23:01 UTC",
+  "as_of": "2026-10-02",
+  "generated_at": "2026-10-02 23:01 UTC",
   "source": "Yahoo Finance (dividend-adjusted closes)",
   "momentum_weight_1m": 0.7,
-  "market_avg_momentum": -1.61,
+  "market_avg_momentum": -1.7,
   "call": "mid",
   "runner_up": "late",
-  "lead": 2.74,
+  "lead": 3.82,
   "close_call": false,
   "phases": [
     {
       "phase": "early",
-      "score": -1.04,
+      "score": -0.57,
       "signals_used": 10
     },
     {
       "phase": "mid",
-      "score": 3.07,
+      "score": 3.56,
       "signals_used": 6
     },
     {
       "phase": "late",
-      "score": 0.33,
+      "score": -0.26,
       "signals_used": 6
     },
     {
       "phase": "recession",
-      "score": -1.26,
+      "score": -1.66,
       "signals_used": 10
     }
   ],
@@ -35,26 +35,26 @@
     {
       "symbol": "XLY",
       "sector": "Consumer Discretionary",
-      "close": 108.81,
-      "r1m": -4.83,
-      "r3m": -7.66,
-      "momentum": -4.23,
+      "close": 110.04,
+      "r1m": -3.99,
+      "r3m": -5.84,
+      "momentum": -3.35,
       "weights": {
         "early": 2,
         "mid": 0,
         "late": -2,
         "recession": 0
       },
-      "rank": 9,
-      "vs_market": -2.62
+      "rank": 6,
+      "vs_market": -1.65
     },
     {
       "symbol": "XLK",
       "sector": "Technology",
-      "close": 197.81,
-      "r1m": 7.84,
-      "r3m": 6.69,
-      "momentum": 5.14,
+      "close": 199.81,
+      "r1m": 8.96,
+      "r3m": 10.77,
+      "momentum": 6.81,
       "weights": {
         "early": 1,
         "mid": 1,
@@ -62,15 +62,15 @@
         "recession": -2
       },
       "rank": 1,
-      "vs_market": 6.75
+      "vs_market": 8.51
     },
     {
       "symbol": "XLE",
       "sector": "Energy",
-      "close": 62.7,
-      "r1m": -2.62,
-      "r3m": 19.43,
-      "momentum": 4.78,
+      "close": 62.82,
+      "r1m": -2.93,
+      "r3m": 18.74,
+      "momentum": 4.45,
       "weights": {
         "early": -2,
         "mid": 0,
@@ -78,31 +78,31 @@
         "recession": -2
       },
       "rank": 2,
-      "vs_market": 6.39
+      "vs_market": 6.15
     },
     {
       "symbol": "XLP",
       "sector": "Consumer Staples",
-      "close": 80.33,
-      "r1m": -5.15,
-      "r3m": -2.93,
-      "momentum": -2.94,
+      "close": 80.53,
+      "r1m": -5.23,
+      "r3m": -4.62,
+      "momentum": -3.48,
       "weights": {
         "early": -2,
         "mid": -1,
         "late": 1,
         "recession": 2
       },
-      "rank": 5,
-      "vs_market": -1.33
+      "rank": 7,
+      "vs_market": -1.78
     },
     {
       "symbol": "XLU",
       "sector": "Utilities",
-      "close": 39.68,
-      "r1m": -6.08,
-      "r3m": -10.72,
-      "momentum": -5.65,
+      "close": 39.83,
+      "r1m": -5.97,
+      "r3m": -12.32,
+      "momentum": -6.08,
       "weights": {
         "early": -2,
         "mid": -1,
@@ -110,31 +110,31 @@
         "recession": 2
       },
       "rank": 11,
-      "vs_market": -4.04
+      "vs_market": -4.38
     },
     {
       "symbol": "XLF",
       "sector": "Financials",
-      "close": 53.46,
-      "r1m": -6.21,
-      "r3m": -2.06,
-      "momentum": -3.1,
+      "close": 53.49,
+      "r1m": -6.9,
+      "r3m": -3.49,
+      "momentum": -3.81,
       "weights": {
         "early": 1,
         "mid": 0,
         "late": 0,
         "recession": -1
       },
-      "rank": 6,
-      "vs_market": -1.49
+      "rank": 8,
+      "vs_market": -2.11
     },
     {
       "symbol": "XLRE",
       "sector": "Real Estate",
-      "close": 40.68,
-      "r1m": -6.85,
-      "r3m": -7.15,
-      "momentum": -4.88,
+      "close": 40.81,
+      "r1m": -5.89,
+      "r3m": -7.89,
+      "momentum": -4.72,
       "weights": {
         "early": 2,
         "mid": -1,
@@ -142,71 +142,71 @@
         "recession": -2
       },
       "rank": 10,
-      "vs_market": -3.27
+      "vs_market": -3.02
     },
     {
       "symbol": "XLI",
       "sector": "Industrials",
-      "close": 168.64,
-      "r1m": -2.11,
-      "r3m": -7.78,
-      "momentum": -3.18,
+      "close": 169.95,
+      "r1m": -1.37,
+      "r3m": -7.34,
+      "momentum": -2.75,
       "weights": {
         "early": 2,
         "mid": 0,
         "late": 0,
         "recession": -2
       },
-      "rank": 7,
-      "vs_market": -1.57
+      "rank": 5,
+      "vs_market": -1.05
     },
     {
       "symbol": "XLB",
       "sector": "Materials",
-      "close": 48.54,
-      "r1m": -6.35,
-      "r3m": -4.42,
-      "momentum": -3.87,
+      "close": 48.86,
+      "r1m": -7.3,
+      "r3m": -5.62,
+      "momentum": -4.61,
       "weights": {
         "early": 1,
         "mid": -2,
         "late": 0,
         "recession": -1
       },
-      "rank": 8,
-      "vs_market": -2.26
+      "rank": 9,
+      "vs_market": -2.91
     },
     {
       "symbol": "XLV",
       "sector": "Health Care",
-      "close": 166.2,
-      "r1m": -2.82,
-      "r3m": 4.57,
-      "momentum": 0.25,
+      "close": 166.18,
+      "r1m": -3.55,
+      "r3m": 1.88,
+      "momentum": -0.86,
       "weights": {
         "early": -2,
         "mid": 0,
         "late": 0,
         "recession": 2
       },
-      "rank": 3,
-      "vs_market": 1.86
+      "rank": 4,
+      "vs_market": 0.84
     },
     {
       "symbol": "XLC",
       "sector": "Communication Services",
-      "close": 109.94,
-      "r1m": -0.52,
-      "r3m": 0.51,
-      "momentum": -0.05,
+      "close": 110.32,
+      "r1m": -1.54,
+      "r3m": 0.99,
+      "momentum": -0.32,
       "weights": {
         "early": 0,
         "mid": 1,
         "late": 0,
         "recession": -1
       },
-      "rank": 4,
-      "vs_market": 1.56
+      "rank": 3,
+      "vs_market": 1.38
     }
   ],
   "errors": []
